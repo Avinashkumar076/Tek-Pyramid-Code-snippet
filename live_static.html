@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // const container = document.createElement("div");
+        // container.innerHTML = "<p class='item'></p><p class='item'></p>";
+
+        // const live = container.getElementsByClassName("item");
+        // const staticList = container.querySelectorAll(".item");
+
+        // container.innerHTML = "";
+
+        // console.log(live.length);
+        // console.log(staticList.length);
+
+
+        
+        // Step 1: Create a new <div> element (not yet attached to the real DOM)
+        const container = document.createElement("div");
+
+        // Step 2: Add two <p> elements inside the container using innerHTML
+        // Both <p> elements have class="item"
+        container.innerHTML = "<p class='item'></p><p class='item'></p>";
+
+
+        // Step 3: Get elements using getElementsByClassName()
+        // IMPORTANT:
+        // - This returns an HTMLCollection
+        // - It is a LIVE collection
+        // - That means it automatically updates when the DOM changes
+        const live = container.getElementsByClassName("item");
+
+
+        // Step 4: Get elements using querySelectorAll()
+        // IMPORTANT:
+        // - This returns a NodeList
+        // - It is a STATIC collection
+        // - That means it does NOT update automatically when the DOM changes
+        const staticList = container.querySelectorAll(".item");
+
+
+        // Step 5: Remove all child elements by clearing innerHTML
+        // This removes both <p class="item"> elements from the container
+        container.innerHTML = "";
+
+
+        // Step 6: Check the length of both collections
+
+        // Since 'live' is a LIVE HTMLCollection,
+        // it automatically updates after DOM change.
+        // Now there are 0 elements with class "item"
+        console.log(live.length);       // Output: 0
+
+
+        // Since 'staticList' is a STATIC NodeList,
+        // it does NOT update after DOM change.
+        // It still holds reference to the 2 original elements
+        console.log(staticList.length); // Output: 2
+    </script>
+</body>
+
+</html>

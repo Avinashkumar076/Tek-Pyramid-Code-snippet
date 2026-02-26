@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="comment">
+            <!--comment-->
+            hi
+            <!--span tag-->
+            <span>hjk</span>
+        </div>
+        <script>
+            let comment = document.getElementsByClassName("comment")[0];
+            console.log(comment.childNodes.length); //7     [text,comment,text,comment,text,span,text]
+            console.log(comment.children.length); //1
+
+            //             ✅ Step 1 — How Browser Reads HTML
+
+            // Browsers do NOT ignore spaces and line breaks.
+
+            // They convert everything into DOM nodes:
+
+            // elements
+
+            // comments
+
+            // text (including spaces & new lines)
+
+            // So indentation and line breaks also become text nodes.
+
+            // ✅ Step 2 — DOM Tree Created
+
+            // Your formatted HTML actually becomes something like:
+
+            // div.comment
+            // ├── text (newline + spaces)
+            // ├── comment  <!--comment-->
+            // ├── text ("hi" + spaces/newline)
+            // ├── comment  <!--span tag-->
+            // ├── text (newline + spaces)
+            // ├── span
+            // └── text (newline + spaces)
+
+            // 👉 Total = 7 nodes
+
+            // ✅ Step 3 — JavaScript Line by Line
+            // 🔹 Line 1
+            // let comment = document.getElementsByClassName("comment")[0]
+            // What happens?
+
+            // document.getElementsByClassName("comment")
+
+            // returns an HTMLCollection
+
+            // contains all elements having class "comment"
+
+            // Example result:
+
+            // HTMLCollection [ div.comment ]
+
+            // [0]
+
+            // selects the first element from collection
+
+            // So now:
+
+            // comment → <div class="comment">...</div>
+            // 🔹 Line 2
+            // console.log(comment.childNodes.length)
+            // What is childNodes?
+
+            // childNodes returns:
+
+            // ✅ ALL nodes inside element:
+
+            // text nodes
+
+            // comment nodes
+
+            // element nodes
+
+            // Why length = 7 ?
+
+            // Let’s count EXACTLY.
+
+            // ✅ Node 1 — Text Node
+
+            // Before first comment:
+
+            // \n spaces
+            // What is this?
+
+            // Browser treats indentation as text.
+
+            // nodeType = 3 (TEXT_NODE)
+            // ✅ Node 2 — Comment Node
+            // <!--comment-->
+            // What is this?
+            // nodeType = 8 (COMMENT_NODE)
+            // ✅ Node 3 — Text Node
+
+            // Contains:
+
+            // "hi" + spaces + newline
+
+            // Still text.
+
+            // ✅ Node 4 — Comment Node
+            // <!--span tag-->
+            // What is this?
+
+            // Another comment node.
+
+            // ✅ Node 5 — Text Node
+
+            // Whitespace before <span>.
+
+            // ✅ Node 6 — Element Node
+            // <span>hjk</span>
+            // What is this?
+            // nodeType = 1 (ELEMENT_NODE)
+            // ✅ Node 7 — Text Node
+
+            // Whitespace after span.
+
+            // Final childNodes array
+            // [text, comment, text, comment, text, span, text]
+
+            // So:
+
+            // comment.childNodes.length // 7 ✅
+            // 🔹 Line 3
+            // console.log(comment.children.length)
+            // What is children?
+
+            // children returns:
+
+            // ✅ ONLY element nodes.
+
+            // It ignores:
+
+            // ❌ text nodes
+
+            // ❌ comment nodes
+
+            // ❌ whitespace
+
+            // Inside your div only one element exists:
+
+            // <span>hjk</span>
+            // What is this?
+
+            // So:
+
+            // comment.children.length // 1
+            // ✅ Visual Comparison
+            // Node Type	childNodes	children
+            // Text (spaces/newlines)	✅ Included	❌ Ignored
+            // Comment	✅ Included	❌ Ignored
+            // Element	✅ Included	✅ Included
+            // ✅ Node Types (Very Important)
+
+            // You can verify:
+
+            // comment.childNodes.forEach(node =>
+            //     console.log(node.nodeType, node.nodeName)
+            // );
+
+            // Output:
+
+            // 3 #text
+            // 8 #comment
+            // 3 #text
+            // 8 #comment
+            // 3 #text
+            // 1 SPAN
+            // 3 #text
+            // ✅ Why Spaces Become Nodes?
+
+            // Because HTML parsing rules say:
+
+            // 👉 Anything between tags = text content.
+
+            // Even:
+
+            // <div>
+            // </div>
+            // What is this?
+
+            // contains a text node (\n).
+
+            // ✅ How to Avoid Extra Text Nodes (Interview Tip)
+
+            // Write HTML like this:
+
+            // <div class="comment"><!--comment-->hi<!--span tag--><span>hjk</span></div>
+            // What is this?
+
+            // Now fewer text nodes appear.
+
+            // ✅ Final Concept (Most Important)
+            // childNodes → EVERYTHING inside element
+            // children   → ONLY HTML elements
+            // ✅ Interview One-Line Answer
+
+            // childNodes counts all nodes including whitespace text and comments, while children counts only element nodes, which is why childNodes.length is 7 but children.length is 1.
+        </script>
+    </body>
+</html>

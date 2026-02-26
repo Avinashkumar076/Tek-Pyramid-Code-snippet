@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+    </ul>
+
+    <script>
+        const list = document.querySelector("ul");
+
+        console.log(list.childNodes.length); // 7
+        console.log(list.children.length);   // 3
+    </script>
+</body>
+
+
+</html>
+
+<!-- Why childNodes.length is 7?
+
+Because childNodes includes EVERYTHING inside <ul>, not just elements.
+
+That means:
+
+Text nodes (whitespace / line breaks)
+
+Element nodes (<li>)
+
+Comments (if any)
+
+When the browser parses this: 
+
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+</ul>
+
+
+It actually becomes like this internally:
+
+<ul>
+   "\n    "        → Text node (1)
+   <li>Item 1</li> → Element node (2)
+   "\n    "        → Text node (3)
+   <li>Item 2</li> → Element node (4)
+   "\n    "        → Text node (5)
+   <li>Item 3</li> → Element node (6)
+   "\n"            → Text node (7)
+</ul>
+
+So total:
+
+Text nodes = 4
+Element nodes = 3
+-------------------
+Total = 7
+
+childNodes returns all node types including text nodes created due to whitespace and line breaks. Since browsers treat formatting spaces as text nodes, each indentation and newline becomes a text node. Therefore, in this example, the <ul> contains 3 <li> element nodes and 4 text nodes, making a total of 7 child nodes.
+
+On the other hand, children returns only element nodes, so it correctly returns 3.-->
